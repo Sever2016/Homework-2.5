@@ -18,15 +18,19 @@ public class StorageService {
     public StorageService(Map<UUID, Product> storageOfProduct, Map<UUID, Article> storageOfArticle) {
         this.storageOfProduct = storageOfProduct;
         this.storageOfArticle = storageOfArticle;
-        putAllOfThis();
+        this.putAllOfThis();
     }
 
     public Collection<Product> getStorageOfProduct() {
-        return this.storageOfProduct.values();
+        return storageOfProduct.values();
     }
 
     public Collection<Article> getStorageOfArticle() {
-        return this.storageOfArticle.values();
+        return storageOfArticle.values();
+    }
+
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(storageOfProduct.get(id));
     }
 
     public HashSet<Searchable> getSearchableRepresentation(StorageService storageService) {
@@ -44,17 +48,17 @@ public class StorageService {
         Product onion = new FixPriceProduct("Onion", UUID.randomUUID());
         Product butter = new SimpleProduct("Butter", 68, UUID.randomUUID());
         Product berries = new SimpleProduct("Berries", 517, UUID.randomUUID());
-        this.storageOfProduct.put(UUID.randomUUID(), apple);
-        this.storageOfProduct.put(UUID.randomUUID(), grape);
-        this.storageOfProduct.put(UUID.randomUUID(), buckwheat);
-        this.storageOfProduct.put(UUID.randomUUID(), onion);
-        this.storageOfProduct.put(UUID.randomUUID(), butter);
-        this.storageOfProduct.put(UUID.randomUUID(), berries);
+        this.storageOfProduct.put(apple.getId(), apple);
+        this.storageOfProduct.put(grape.getId(), grape);
+        this.storageOfProduct.put(buckwheat.getId(), buckwheat);
+        this.storageOfProduct.put(onion.getId(), onion);
+        this.storageOfProduct.put(butter.getId(), butter);
+        this.storageOfProduct.put(berries.getId(), berries);
         Article onionArticle = new Article("Onion", "Почему лук заставляет плакать?", UUID.randomUUID());
         Article cookiesArticle = new Article("Cookies", "Вкусно и полезно, но как?", UUID.randomUUID());
         Article amberArticle = new Article("Amber", "Сочно, дерзко, аппетитно", UUID.randomUUID());
-        this.storageOfArticle.put(UUID.randomUUID(), onionArticle);
-        this.storageOfArticle.put(UUID.randomUUID(), cookiesArticle);
-        this.storageOfArticle.put(UUID.randomUUID(), amberArticle);
+        this.storageOfArticle.put(onionArticle.getId(), onionArticle);
+        this.storageOfArticle.put(cookiesArticle.getId(), cookiesArticle);
+        this.storageOfArticle.put(amberArticle.getId(), amberArticle);
     }
 }
