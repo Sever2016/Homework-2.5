@@ -20,9 +20,6 @@ public class BasketService {
     }
 
     public void addProduct(UUID id) {
-        if (storageService.getProductById(id).isEmpty()) {
-            throw new IllegalArgumentException("Нет такого продукта");
-        }
         productBasket.addProduct(id);
     }
 
