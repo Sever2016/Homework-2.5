@@ -15,7 +15,7 @@ public class SearchService {
     }
 
     public Collection<SearchResult> searchResult(String search) {
-        return storageService.getSearchableRepresentation(storageService).stream()
+        return storageService.getSearchableRepresentation().stream()
                 .filter(i -> i.searchTerm().contains(search))
                 .map(SearchResult::fromSearchable)
                 .collect(Collectors.toSet());
