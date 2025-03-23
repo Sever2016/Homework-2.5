@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.skypro.skyshop.exceptions.NoSuchProductException;
 import org.skypro.skyshop.model.basket.ProductBasket;
+import org.skypro.skyshop.model.basket.UserBasket;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.product.SimpleProduct;
 import org.skypro.skyshop.service.BasketService;
@@ -33,7 +34,7 @@ public class BasketServiceTest {
 
     @Test
     void givenUnknownProduct_whenPuttingProductInBasket_thenThrowNoSuchProductException() {
-        Exception thrownException = new Exception();
+        Exception thrownException = null;
         UUID id = UUID.randomUUID();
         Mockito.when(storageService.getProductById(id)).thenReturn(Optional.empty());
 
@@ -51,7 +52,7 @@ public class BasketServiceTest {
 
     @Test
     void givenProduct_whenPuttingProductInBasket_thenDoNotThrowNoSuchProductException() {
-        Exception thrownException = new Exception();
+        Exception thrownException = null;
         Product product = new SimpleProduct("Onion", 125, UUID.randomUUID());
         Mockito.when(storageService.getProductById(product.getId())).thenReturn(Optional.of(product));
 
@@ -62,8 +63,7 @@ public class BasketServiceTest {
         }
 
         assertThat(thrownException)
-                .isExactlyInstanceOf(Exception.class)
-                .isNotExactlyInstanceOf(NoSuchProductException.class);
+                .isNull();
     }
 
     @Test
@@ -81,9 +81,10 @@ public class BasketServiceTest {
         Mockito.when(storageService.getProductById(product2.getId())).thenReturn(Optional.of(product2));
         Mockito.when(productBasket.getProductBasket()).thenReturn(Map.of(product1.getId(), 1, product2.getId(), 1));
 
-        Assertions.assertEquals(basketService.getUserBasket().basketItem.size(), 2);
-        Assertions.assertEquals(basketService.getUserBasket().total, 225);
-        Assertions.assertEquals(basketService.getUserBasket().basketItem.get(0).getProduct(), product1);
-        Assertions.assertEquals(basketService.getUserBasket().basketItem.get(1).getProduct(), product2);
+        UserBasket userBasket = basketService.getUserBasket();
+
+        Assertions.assertEquals(userBasket.basketItem.size(), 2);
+        Assertions.assertEquals(userBasket.total, 225);
+        Assertions.assertEquals(Map.of(userBasket.basketItem.get(0).getProduct(), userBasket.basketItem.get(1).getProduct()), Map.of(product1, product2));
     }
 }

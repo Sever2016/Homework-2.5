@@ -54,11 +54,12 @@ public class SearchServiceTest {
         Mockito.when(storageService.getSearchableRepresentation()).thenReturn(searchables);
 
         Collection<SearchResult> result = searchService.searchResult(productName);
+        SearchResult searchResult = new ArrayList<>(result).get(0);
 
         Assertions.assertFalse(result.isEmpty());
-        Assertions.assertEquals(result.iterator().next().getName(), "Onion");
-        Assertions.assertEquals(result.iterator().next().getId(), simpleProduct.getId());
-        Assertions.assertEquals(result.iterator().next().getContentType(), simpleProduct.getTypeOfContent());
-        Assertions.assertEquals(result.size(), 1);
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals(searchResult.getId(), simpleProduct.getId());
+        Assertions.assertEquals(searchResult.getContentType(), simpleProduct.getTypeOfContent());
+        Assertions.assertEquals(searchResult.getName(), simpleProduct.getProductName());
     }
 }
