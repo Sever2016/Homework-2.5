@@ -33,10 +33,10 @@ public class StorageService {
         return Optional.ofNullable(storageOfProduct.get(id));
     }
 
-    public HashSet<Searchable> getSearchableRepresentation(StorageService storageService) {
-        HashSet<Searchable> result = new HashSet<>(storageService.storageOfProduct.values().stream()
+    public HashSet<Searchable> getSearchableRepresentation() {
+        HashSet<Searchable> result = new HashSet<>(storageOfProduct.values().stream()
                 .collect(HashSet::new, HashSet<Searchable>::add, HashSet<Searchable>::addAll));
-        result.addAll(storageService.storageOfArticle.values().stream()
+        result.addAll(storageOfArticle.values().stream()
                 .collect(HashSet::new, HashSet<Searchable>::add, HashSet<Searchable>::addAll));
         return result;
     }
